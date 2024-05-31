@@ -1,0 +1,30 @@
+{
+  "api": {
+    "enabled": true,
+    "address": "0.0.0.0:8687"
+  },
+  "sources": {
+    "agent": {
+      "type": "vector",
+      "address": "0.0.0.0:50051"
+    }
+  },
+  "sinks": {
+    "console": {
+      "type": "console",
+      "inputs": ["agent"],
+      "encoding": {
+        "codec": "json"
+      }
+    },
+    "file_sink": {
+      "type": "file",
+      "inputs": ["agent"],
+      "path": "/etc/vector/vector.log",
+      "encoding": {
+        "codec": "json"
+      }
+    }
+  }
+}
+

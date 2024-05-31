@@ -1,0 +1,32 @@
+{
+  "api": {
+    "enabled": true,
+    "address": "0.0.0.0:8686"
+  },
+  "sources": {
+    "stdin": {
+      "type": "stdin"
+    },
+    "socket": {
+      "type": "socket",
+      "address": "0.0.0.0:9001",
+      "mode": "tcp"
+    }
+  },
+  "sinks": {
+    "aggregator": {
+      "type": "vector",
+      "inputs": ["stdin", "socket"],
+      "address": "vector-aggregator:50051"
+    },
+    "file_sink": {
+      "type": "file",
+      "inputs": ["stdin", "socket"],
+      "path": "/etc/vector/vector.log",
+      "encoding": {
+        "codec": "json"
+      }
+    }
+  }
+}
+

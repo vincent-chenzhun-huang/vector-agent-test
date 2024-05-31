@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  vector-aggregator:
+    image: timberio/vector:0.37.0-debian
+    container_name: vector-aggregator
+    ports:
+      - "8687:8687"    
+      - "50051:50051" 
+    volumes:
+      - ./vector-aggregator.json:/etc/vector/vector.json
+    entrypoint: ["vector", "--config", "/etc/vector/vector.json"]
+    networks:
+      - vector-network
+    environment:
+      - VECTOR_LOG=debug
+  vector-agent:
+    image: timberio/vector:0.37.0-debian
+    container_name: vector-agent
+    ports:
+      - "9001:9001"
+      - "8686:8686"
+    volumes:
+      - ./vector-agent.json:/etc/vector/vector.json
+    entrypoint: ["vector", "--config", "/etc/vector/vector.json"]
+    networks:
+      - vector-network
+    environment:
+      - VECTOR_LOG=debug
+
+networks:
+  vector-network:
+    driver: bridge
+
